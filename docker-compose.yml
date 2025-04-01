@@ -1,34 +1,34 @@
-version: '3.8'
-
 services:
-  postgres:
-    image: postgres:15
-    container_name: postgres_db
-    restart: always
-    env_file:
-      - .env
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}"]
-      interval: 10s
-      retries: 5
-      start_period: 5s
-      timeout: 3s
+  # postgres:
+  #   image: postgres:15
+  #   container_name: postgres_db
+  #   restart: always
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     POSTGRES_USER: ${POSTGRES_USER}
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  #     POSTGRES_DB: ${POSTGRES_DB}
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - ./pgdata:/var/lib/postgresql/data
+  #   healthcheck:
+  #     test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}"]
+  #     interval: 10s
+  #     retries: 5
+  #     start_period: 5s
+  #     timeout: 3s
 
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: nest_app
     restart: always
-    depends_on:
-      postgres:
-        condition: service_healthy
+    # depends_on:
+    #   postgres:
+    #     condition: service_healthy
     env_file:
       - .env
     environment:
@@ -36,6 +36,6 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - .:/usr/src/app
-    command: npm run start:dev
+      - .:/usr/src/app  
+      - /usr/src/app/node_modules
 
