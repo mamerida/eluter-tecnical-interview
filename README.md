@@ -26,23 +26,50 @@
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Project setup
+Para poder iniciar el proyecto es necesario tener instalado [Docker Compose](https://docs.docker.com/compose/) 
+Ademas es necesario crear un archivo `.env` con la siguiente estructura 
+
+```
+POSTGRES_HOST=<nombreDelHost>
+POSTGRES_PORT=5432
+POSTGRES_USER=<userName>
+POSTGRES_PASSWORD=<password>
+POSTGRES_DB=<dbName>
+```
+
+y una carpeta llamada `pgdata` en la raiz del proyecto. donde se va a guardar de manera local nuestra data.
+
+con eso instalado podemos proceder a iniciar el proyecto . 
+
+```bash
+$ docker compose up 
+```
+
+Esto levantara la instancia de la base de datos 
+Ahora con respecto al proyecto. Se recomienda usar [Node 20.11](https://nodejs.org/es/blog/release/v20.11.0) ademas de usar [nvm](https://github.com/nvm-sh/nvm) para el manejo de los paquetes de node. 
+Con eso instalado podemos iniciar el proyecto
 
 ```bash
 $ npm install
+$ npm run start:dev
 ```
 
-## Compile and run the project
+Con el proyecto iniciado ejecutaremos lo siguiente 
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+$ npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/database/dataSource.ts
 ```
+Esto ejecutara las migraciones en la base de datos para crear las tablas necesarias en la base de datos para poder trabajar 
+
+```bash
+$ npx ts-node src/database/seeds/initialSeed.ts
+```
+Esto llenara la base con cierta data necesaria para poder tener algunos clientes y saldos necesarios. 
+
+```bash
+$ npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate src/database/migrations/<nombreDeLaMigracion> -d src/database/dataSource.ts
+```
+Y por ultimo con esto nos permitira crear nuevas migraciones en caso de necesitar modificar los modelos o crear nuevas tablas. 
 
 ## Run tests
 
@@ -57,42 +84,3 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
