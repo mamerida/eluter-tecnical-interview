@@ -14,7 +14,7 @@ export class Account {
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;
 
-  @CreateDateColumn({ type: 'timestamp' })
+  @CreateDateColumn({ type: 'timestamp', nullable: true })
   deleted_at: Date;
 
   @OneToMany(() => AccountBalance, (accountBalance) => accountBalance.account, { cascade: true })

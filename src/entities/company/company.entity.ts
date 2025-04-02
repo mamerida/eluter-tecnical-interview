@@ -12,8 +12,8 @@ export class Company {
   @Column({ type: 'varchar', nullable: false })
   society: string;
 
-  @Column({ type: 'int', nullable: false, unique: true })
-  cuit: number;
+  @Column({ type: 'char', length: 11, unique: true })
+  cuit: string;
 
   @Column({ type: 'varchar', nullable: false })
   password: string;

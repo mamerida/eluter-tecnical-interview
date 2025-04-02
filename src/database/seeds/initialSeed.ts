@@ -1,7 +1,7 @@
-import { Company } from 'src/entities/company/company.entity';
-import { Account } from 'src/entities/accounts/account.entity';
-import { AppDataSource } from '../dataSource';
-import { AccountBalance } from 'src/entities/accountBalance/accountBalance.entity';
+import { Company } from '../../entities/company/company.entity';
+import { Account } from '../../entities/accounts/account.entity';
+import  AppDataSource from '../dataSource';
+import { AccountBalance } from '../../entities/accountBalance/accountBalance.entity';
 
 async function seedDatabase() {
   await AppDataSource.initialize();
@@ -14,7 +14,7 @@ async function seedDatabase() {
   const company1 = companyRepo.create({
     company_name: 'Empresa Alpha',
     society: 'SA',
-    cuit: 12345678901,
+    cuit: '12345678901',
     password: 'password123',
     created_at: new Date(),
   });
@@ -22,7 +22,7 @@ async function seedDatabase() {
   const company2 = companyRepo.create({
     company_name: 'Empresa Beta',
     society: 'SRL',
-    cuit: 98765432101,
+    cuit: '98765432101',
     password: 'password456',
     created_at: new Date(),
   });

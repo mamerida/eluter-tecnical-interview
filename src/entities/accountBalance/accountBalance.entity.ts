@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, CreateDateColumn, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, CreateDateColumn, DeleteDateColumn, JoinColumn } from 'typeorm';
 import { Account } from '../accounts/account.entity';
 
 
@@ -8,7 +8,7 @@ export class AccountBalance {
   id: number;
 
   @ManyToOne(() => Account, (account) => account.balances, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'id' }) 
+  @JoinColumn({ name: 'account_id' }) 
   account: Account;
 
   @Column({ type: 'float', nullable: true })
@@ -20,6 +20,6 @@ export class AccountBalance {
   @CreateDateColumn({ type: 'timestamp', nullable: true })
   created_at: Date;
 
-  @CreateDateColumn({ type: 'timestamp', nullable: true })
+  @DeleteDateColumn({ type: 'timestamp', nullable: true })
   deleted_at: Date;
 }
