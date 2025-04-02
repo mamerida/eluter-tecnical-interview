@@ -13,12 +13,6 @@ services:
       - "5432:5432"
     volumes:
       - ./pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}"]
-      interval: 10s
-      retries: 5
-      start_period: 5s
-      timeout: 3s
 
   app:
     build:
@@ -26,9 +20,6 @@ services:
       dockerfile: Dockerfile
     container_name: nest_app
     restart: always
-    depends_on:
-      postgres:
-        condition: service_healthy
     env_file:
       - .env
     environment:
