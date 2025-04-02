@@ -1,6 +1,6 @@
 import { Company } from '../../entities/company/company.entity';
 import { Account } from '../../entities/accounts/account.entity';
-import  AppDataSource from '../dataSource';
+import AppDataSource from '../dataSource';
 import { AccountBalance } from '../../entities/accountBalance/accountBalance.entity';
 
 async function seedDatabase() {
@@ -42,31 +42,36 @@ async function seedDatabase() {
   await accountRepo.save([account1, account2]);
 
   const balanceCompany1Debit = balanceRepo.create({
-    account:account1,
-    debit:300,
-    created_at: new Date()
+    account: account1,
+    debit: 300,
+    created_at: new Date(),
   });
   const balance2Company1Credit = balanceRepo.create({
-    account:account1,
-    credit:100,
-    created_at: new Date()
+    account: account1,
+    credit: 100,
+    created_at: new Date(),
   });
 
   const balanceCompany2Debit = balanceRepo.create({
-    account:account2,
-    debit:400,
-    created_at: new Date()
+    account: account2,
+    debit: 400,
+    created_at: new Date(),
   });
   const balance2Company2Credit = balanceRepo.create({
-    account:account2,
-    credit:100,
-    created_at: new Date()
+    account: account2,
+    credit: 100,
+    created_at: new Date(),
   });
 
-  await balanceRepo.save([balanceCompany1Debit, balance2Company1Credit, balanceCompany2Debit, balance2Company2Credit]);
+  await balanceRepo.save([
+    balanceCompany1Debit,
+    balance2Company1Credit,
+    balanceCompany2Debit,
+    balance2Company2Credit,
+  ]);
 
   console.log('success');
-  await AppDataSource.destroy(); 
+  await AppDataSource.destroy();
 }
 
 seedDatabase().catch((err) => {

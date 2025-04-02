@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, JoinColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  CreateDateColumn,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
 import { Company } from '../../entities/company/company.entity';
 import { AccountBalance } from '../accountBalance/accountBalance.entity';
 
@@ -7,8 +14,10 @@ export class Account {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Company, (company) => company.accounts, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'company_id' }) 
+  @ManyToOne(() => Company, (company) => company.accounts, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'company_id' })
   company: Company;
 
   @CreateDateColumn({ type: 'timestamp' })
@@ -17,6 +26,8 @@ export class Account {
   @CreateDateColumn({ type: 'timestamp', nullable: true })
   deleted_at: Date;
 
-  @OneToMany(() => AccountBalance, (accountBalance) => accountBalance.account, { cascade: true })
+  @OneToMany(() => AccountBalance, (accountBalance) => accountBalance.account, {
+    cascade: true,
+  })
   balances: AccountBalance[];
 }

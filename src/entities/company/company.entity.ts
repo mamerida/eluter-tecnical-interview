@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  OneToMany,
+} from 'typeorm';
 import { Account } from '../../entities/accounts/account.entity';
 
 @Entity({ name: 'companies' })
