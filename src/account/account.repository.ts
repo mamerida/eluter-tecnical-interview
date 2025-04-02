@@ -1,5 +1,5 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Account } from 'src/entities/accounts/account.entity';
 
@@ -12,16 +12,20 @@ export class AccountRepository extends Repository<Account> {
     super(repository.target, repository.manager, repository.queryRunner);
   }
 
-  async getBalance(accountId: number): Promise<Account> {
-    const account = await this.repository
-      .createQueryBuilder('account')
-      .leftJoinAndSelect('account.company', 'company')
-      .leftJoinAndSelect(
+  async getBalance(
+    accountId: number,
+    manager: EntityManager,
+  ): Promise<Account> {
+    const account = await manager
+      .createQueryBuilder(Account, 'account')
+      .innerJoinAndSelect('account.company', 'company')
+      .innerJoinAndSelect(
         'account.balances',
         'balances',
         'balances.deleted_at IS NULL',
       )
       .where('account.id = :accountId', { accountId })
+      .setLock('pessimistic_read')
       .getOne();
     if (
       !account ||
