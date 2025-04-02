@@ -78,7 +78,13 @@ Y por ultimo con esto nos permitira crear nuevas migraciones en caso de necesita
 - Basándonos en la entrevista técnica, se decidió que una empresa puede tener múltiples cuentas dentro de la aplicación. Esto permite que una empresa esté asociada a más de una billetera o cuenta virtual.  
 - Aunque las contraseñas en la base de datos deberían estar encriptadas, para fines de la prueba técnica se dejaron a nivel de mock, ya que no era un aspecto relevante en este contexto.  
 - La API debería contar con un mecanismo de seguridad, como **JWT** o **OAuth2**, para evitar que esté abierta a cualquier usuario.  
-- Se asume que esta aplicación servirá como backend para una aplicación móvil o web. Dado el negocio de **Eluter**, el backend debe proporcionar datos a estos clientes, por lo que se optó por **NestJS**, un framework enfocado en el desarrollo de Web APIs.  
+- Se asume que esta aplicación servirá como backend para una aplicación móvil o web. Dado el negocio de **Eluter**, el backend debe proporcionar datos a estos clientes, por lo que se optó por **NestJS**, un framework enfocado en el desarrollo de Web APIs.
+
+## Digramagra  
+se creo esta pequeña base donde cada cuenta esta asociada con un id a un cliente, varias cuentas pueden pertenecer a un cliente. Cada cuenta tiene asociada unos balances los cuales mediante calculos nos permiten obtener el total de la cuenta y llevar un registro de cuanto salgo tiene y que transacciones realizo
+
+  <img width="1028" alt="image" src="https://github.com/user-attachments/assets/33c79ee4-0702-4292-8b91-9b14a11c54ac" />
+
 
 ## 🏗️ Decisiones Arquitectónicas  
 
