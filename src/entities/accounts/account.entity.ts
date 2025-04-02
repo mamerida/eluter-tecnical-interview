@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, JoinColumn, OneToMany } from 'typeorm';
 import { Company } from '../../entities/company/company.entity';
+import { AccountBalance } from '../accountBalance/accountBalance.entity';
 
 @Entity({ name: 'accounts' })
 export class Account {
@@ -10,12 +11,12 @@ export class Account {
   @JoinColumn({ name: 'company_id' }) 
   company: Company;
 
-  @Column({ type: 'float', nullable: true })
-  debit: number;
-
-  @Column({ type: 'float', nullable: true })
-  credit: number;
-
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;
+
+  @CreateDateColumn({ type: 'timestamp' })
+  deleted_at: Date;
+
+  @OneToMany(() => AccountBalance, (accountBalance) => accountBalance.account, { cascade: true })
+  balances: AccountBalance[];
 }
