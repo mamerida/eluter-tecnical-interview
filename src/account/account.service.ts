@@ -35,4 +35,46 @@ export class AccountService {
       return accountDTO;
     });
   }
+
+  async makeTransaction(
+    accountId: number,
+    originAccount: number,
+    mount: number,
+  ): Promise<{ success: boolean; message: string }> {
+    return await this.entityManager.transaction(async (manager) => {
+      await this.accountRepository.makeTransaction(
+        accountId,
+        originAccount,
+        mount,
+        manager,
+      );
+
+      await this.simulateExternalSystem(accountId, originAccount, mount);
+      return {
+        success: true,
+        message: 'Transaction completed successfully',
+      };
+    });
+  }
+  private async simulateExternalSystem(
+    accountId: number,
+    originAccount: number,
+    mount: number,
+  ): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const delay = Math.random() * 5000 + 100;
+      setTimeout(() => {
+        const failChance = Math.random();
+        if (failChance < 0.05) {
+          reject(
+            new Error(
+              `External system failed for transaction ${accountId} -> ${originAccount} of ${mount}`,
+            ),
+          );
+        } else {
+          resolve();
+        }
+      }, delay);
+    });
+  }
 }
